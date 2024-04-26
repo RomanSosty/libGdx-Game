@@ -6,7 +6,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
@@ -14,12 +13,10 @@ import com.mygdx.game.settings.GameSettings;
 
 
 public class MainMenu extends ScreenAdapter {
+    private final MyGdxGame game;
     public OrthographicCamera camera;
     private Music music;
-    private MyGdxGame game;
-    private Texture background;
-    private TextureRegion backgroundRegion;
-    private Texture play, quit, options, title;
+    private Texture play, quit, options;
 
     public MainMenu(MyGdxGame game) {
         this.game = game;
@@ -34,17 +31,11 @@ public class MainMenu extends ScreenAdapter {
         music.setLooping(true);
         music.play();
 
-        background = new Texture("mainBackground.png");
-        backgroundRegion = new TextureRegion(background, 0, 0, 300, 150);
-
-        play = new Texture("fonts/play.png");
-        quit = new Texture("fonts/quit.png");
-        options = new Texture("fonts/options.png");
-
-        title = new Texture("fonts/title.png");
+        play = new Texture("buttons/play.png");
+        quit = new Texture("buttons/quit.png");
+        options = new Texture("buttons/options.png");
 
         Gdx.input.setInputProcessor(new InputAdapter() {
-
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
@@ -60,39 +51,17 @@ public class MainMenu extends ScreenAdapter {
                 return false;
             }
         });
-
-
-    }
-
-    private boolean isQuit(float x, float y) {
-
-        int width = 50 + play.getWidth();
-        int height = 100 + play.getHeight();
-
-        return x >= 50 && x <= width
-                && y >= 110 && y <= height;
-    }
-
-    private boolean isPlay(float x, float y) {
-
-        int width = 50 + play.getWidth();
-        int height = 200 + play.getHeight();
-
-        return x >= 50 && x <= width
-                && y >= 210 && y <= height;
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        ScreenUtils.clear(0.22f, 0.25f, 0.24f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(backgroundRegion, 0, 0, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
-        game.batch.draw(play, 50, 200);
-        game.batch.draw(options, 50, 150);
-        game.batch.draw(quit, 50, 100);
-        game.batch.draw(title, 80, 0);
+        game.batch.draw(play, GameSettings.SCREEN_WIDTH / 2 - play.getWidth() / 2, 200);
+        game.batch.draw(options, GameSettings.SCREEN_WIDTH / 2 - options.getWidth() / 2, 150);
+        game.batch.draw(quit, GameSettings.SCREEN_WIDTH / 2 - quit.getWidth() / 2, 100);
         game.batch.end();
     }
 
@@ -100,6 +69,24 @@ public class MainMenu extends ScreenAdapter {
     public void hide() {
         music.dispose();
         Gdx.input.setInputProcessor(null);
+    }
+
+    private boolean isQuit(float x, float y) {
+
+        int width = (GameSettings.SCREEN_WIDTH / 2 - quit.getWidth() / 2) + quit.getWidth();
+        int height = 100 + quit.getHeight();
+
+        return x >= 50 && x <= width
+                && y >= 110 && y <= height;
+    }
+
+    private boolean isPlay(float x, float y) {
+
+        int width = (GameSettings.SCREEN_WIDTH / 2 - play.getWidth() / 2) + play.getWidth();
+        int height = 200 + play.getHeight();
+
+        return x >= 50 && x <= width
+                && y >= 210 && y <= height;
     }
 
 }
