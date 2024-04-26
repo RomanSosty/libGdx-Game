@@ -47,11 +47,6 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
     public void hide() {
         pinkMonster.dispose();
     }

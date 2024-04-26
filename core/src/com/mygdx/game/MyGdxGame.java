@@ -4,9 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.screen.MainMenu;
+import com.mygdx.game.settings.Assets;
 
 public class MyGdxGame extends Game {
-
     public SpriteBatch batch;
     public ShapeRenderer shapeRenderer;
 
@@ -14,6 +14,7 @@ public class MyGdxGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
+        Assets.load();
         setScreen(new MainMenu(this));
     }
 
