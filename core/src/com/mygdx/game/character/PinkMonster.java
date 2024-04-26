@@ -1,38 +1,55 @@
 package com.mygdx.game.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.settings.GameSettings;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.character.inputProcesors.PinkMonsterInputProcessor;
 
-public class PinkMonster extends DynamicGameObject {
-    private static final Texture PINK_MONSTER_TEXTURE = new Texture("characters/Pink_Monster/Pink_Monster.png");
-    private static final float PINK_MONSTER_WIDTH = 32;
-    private static final float PINK_MONSTER_HEIGHT = 32;
-    private static final float speed = 100;
+public class PinkMonster {
+    private final World world;
+    private final Texture texture;
+    private final Sprite sprite;
+    private Body body;
 
-    public PinkMonster(float x, float y) {
-        super(x, y, PINK_MONSTER_WIDTH, PINK_MONSTER_HEIGHT);
+    public PinkMonster(World world) {
+        this.world = world;
+        makeBody();
+        texture = new Texture("characters/Pink_Monster/Pink_Monster.png");
+        sprite = new Sprite(texture);
+        sprite.setPosition(body.getPosition().x, body.getPosition().y);
+
+        PinkMonsterInputProcessor inputProcessor = new PinkMonsterInputProcessor(body);
+        Gdx.input.setInputProcessor(inputProcessor);
     }
 
-    public void update() {
-        move();
-    }
+    private void makeBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.position.set(32, 32);
 
-    private void move() {
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) this.getPosition().x -= speed * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) this.getPosition().x += speed * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) this.getPosition().y += speed * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) this.getPosition().y -= speed * Gdx.graphics.getDeltaTime();
+        body = world.createBody(bodyDef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(0.5f, 1f);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
 
-        if (this.getPosition().x < 0) this.getPosition().x = 0;
-        if (this.getPosition().x > GameSettings.SCREEN_WIDTH - PINK_MONSTER_WIDTH)
-            this.getPosition().x = GameSettings.SCREEN_WIDTH - PINK_MONSTER_WIDTH;
+        body.createFixture(fixtureDef);
+        shape.dispose();
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(PINK_MONSTER_TEXTURE, this.getPosition().x, this.getPosition().y, PINK_MONSTER_WIDTH, PINK_MONSTER_HEIGHT);
+        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2,
+                body.getPosition().y - sprite.getHeight() / 2);
+
+        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+
+        sprite.draw(batch);
     }
 
+    public void dispose() {
+        texture.dispose();
+    }
 }
