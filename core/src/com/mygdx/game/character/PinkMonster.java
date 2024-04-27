@@ -43,7 +43,7 @@ public class PinkMonster {
     private void makeBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
-        bodyDef.position.set(32, 32);
+        bodyDef.position.set(32, 48);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
