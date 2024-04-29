@@ -3,15 +3,13 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.character.PinkMonster;
+import com.mygdx.game.settings.Assets;
 import com.mygdx.game.settings.GameSettings;
 
 public class GameScreen extends ScreenAdapter {
@@ -19,9 +17,7 @@ public class GameScreen extends ScreenAdapter {
     private final MyGdxGame game;
     private final OrthographicCamera camera;
     private final World world;
-    private Texture playerUI;
     private PinkMonster pinkMonster;
-    private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
 
@@ -34,9 +30,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         pinkMonster = new PinkMonster(world);
-        playerUI = new Texture("UI.png");
-        map = new TmxMapLoader().load("map/level-1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
+        renderer = new OrthogonalTiledMapRenderer(Assets.map);
     }
 
     @Override
@@ -52,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
         game.batch.begin();
         pinkMonster.render(game.batch);
         pinkMonster.update(delta);
-        game.batch.draw(playerUI, 15, GameSettings.SCREEN_HEIGHT - playerUI.getHeight());
+        game.batch.draw(Assets.playerUI, 15, GameSettings.SCREEN_HEIGHT - Assets.playerUI.getHeight());
         game.batch.end();
     }
 

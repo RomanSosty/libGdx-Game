@@ -21,7 +21,7 @@ public class MainMenu extends ScreenAdapter {
     @Override
     public void show() {
         camera = new OrthographicCamera(GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
-        camera.position.set(GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2, 0);
+        camera.position.set((float) GameSettings.SCREEN_WIDTH / 2, (float) GameSettings.SCREEN_HEIGHT / 2, 0);
 
         Gdx.input.setInputProcessor(new MainMenuInputProcessor(this, game));
     }
@@ -32,9 +32,9 @@ public class MainMenu extends ScreenAdapter {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(Assets.playButton, GameSettings.SCREEN_WIDTH / 2 - Assets.playButton.getWidth() / 2, 200);
-        game.batch.draw(Assets.optionsButton, GameSettings.SCREEN_WIDTH / 2 - Assets.optionsButton.getWidth() / 2, 150);
-        game.batch.draw(Assets.quitButton, GameSettings.SCREEN_WIDTH / 2 - Assets.quitButton.getWidth() / 2, 100);
+        game.batch.draw(Assets.playButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 200);
+        game.batch.draw(Assets.optionsButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 150);
+        game.batch.draw(Assets.quitButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 100);
         game.batch.end();
     }
 
@@ -44,16 +44,16 @@ public class MainMenu extends ScreenAdapter {
     }
 
     public boolean isQuit(float x, float y) {
-        int width = (GameSettings.SCREEN_WIDTH / 2 - Assets.quitButton.getWidth() / 2) + Assets.quitButton.getWidth();
-        int height = 100 + Assets.quitButton.getHeight();
+        int width = (GameSettings.SCREEN_WIDTH / 2 - GameSettings.BUTTTON_WIDTH / 2) + GameSettings.BUTTTON_WIDTH;
+        int height = 100 + GameSettings.BUTTTON_HEIGHT;
 
         return x >= 50 && x <= width
                 && y >= 110 && y <= height;
     }
 
     public boolean isPlay(float x, float y) {
-        int width = (GameSettings.SCREEN_WIDTH / 2 - Assets.playButton.getWidth() / 2) + Assets.playButton.getWidth();
-        int height = 200 + Assets.playButton.getHeight();
+        int width = (GameSettings.SCREEN_WIDTH / 2 - GameSettings.BUTTTON_WIDTH / 2) + GameSettings.BUTTTON_WIDTH;
+        int height = 200 + GameSettings.BUTTTON_HEIGHT;
 
         return x >= 50 && x <= width
                 && y >= 210 && y <= height;

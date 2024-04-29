@@ -1,7 +1,6 @@
 package com.mygdx.game.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +9,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.inputProcesors.PinkMonsterInputProcessor;
+import com.mygdx.game.settings.Assets;
 
 public class PinkMonster {
     private final World world;
-    private final Texture texture, walkSheet;
     private final Sprite sprite;
     private boolean isWalking = false;
     private Animation<TextureRegion> walkAnimation;
@@ -23,9 +22,7 @@ public class PinkMonster {
     public PinkMonster(World world) {
         this.world = world;
         makeBody();
-        texture = new Texture("characters/Pink_Monster/Pink_Monster.png");
-        walkSheet = new Texture("characters/Pink_Monster/Pink_Monster_Walk_6.png");
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / 6, walkSheet.getHeight());
+        TextureRegion[][] tmp = TextureRegion.split(Assets.walkSheet, Assets.walkSheet.getWidth() / 6, Assets.walkSheet.getHeight());
 
         Array<TextureRegion> walkFrames = new Array<>();
         for (int i = 0; i < 6; i++) {
@@ -33,7 +30,7 @@ public class PinkMonster {
         }
 
         walkAnimation = new Animation<>(0.1f, walkFrames);
-        sprite = new Sprite(texture);
+        sprite = new Sprite(Assets.playerTexture);
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
 
         PinkMonsterInputProcessor inputProcessor = new PinkMonsterInputProcessor(this);
@@ -61,7 +58,7 @@ public class PinkMonster {
         if (isWalking) {
             sprite.setRegion(walkAnimation.getKeyFrame(stateTime, true));
         } else {
-            sprite.setRegion(texture);
+            sprite.setRegion(Assets.playerTexture);
         }
     }
 
@@ -75,7 +72,7 @@ public class PinkMonster {
     }
 
     public void dispose() {
-        texture.dispose();
+        Assets.playerTexture.dispose();
     }
 
     public Body getBody() {
