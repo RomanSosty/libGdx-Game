@@ -21,7 +21,9 @@ public class PinkMonster {
 
     public PinkMonster(World world) {
         this.world = world;
+
         makeBody();
+
         TextureRegion[][] tmp = TextureRegion.split(Assets.walkSheet, Assets.walkSheet.getWidth() / 6, Assets.walkSheet.getHeight());
 
         Array<TextureRegion> walkFrames = new Array<>();
@@ -39,16 +41,17 @@ public class PinkMonster {
 
     private void makeBody() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(32, 48);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 1f);
+        shape.setAsBox(Assets.playerTexture.getWidth() / 2, Assets.playerTexture.getHeight() / 2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
         body.createFixture(fixtureDef);
+        body.setGravityScale(4.0f);
         shape.dispose();
     }
 
