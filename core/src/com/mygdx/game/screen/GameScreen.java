@@ -18,10 +18,9 @@ public class GameScreen extends ScreenAdapter {
     private final MyGdxGame game;
     private final OrthographicCamera camera;
     private final World world;
+    private final Box2DDebugRenderer debugRenderer;
     private PinkMonster pinkMonster;
     private OrthogonalTiledMapRenderer renderer;
-
-    private final Box2DDebugRenderer debugRenderer;
 
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
