@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
@@ -20,11 +21,14 @@ public class GameScreen extends ScreenAdapter {
     private PinkMonster pinkMonster;
     private OrthogonalTiledMapRenderer renderer;
 
+    private final Box2DDebugRenderer debugRenderer;
+
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
         this.game = game;
         this.camera = camera;
         world = new World(new Vector2(0, -9.81f), true);
+        debugRenderer = new Box2DDebugRenderer(true, true, true, true, true, true);
     }
 
     @Override
@@ -39,6 +43,7 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
         world.step(delta, 6, 2);
         game.batch.setProjectionMatrix(camera.combined);
+        debugRenderer.render(world, camera.combined);
 
         renderer.setView(camera);
         renderer.render();
