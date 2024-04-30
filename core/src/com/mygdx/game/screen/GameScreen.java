@@ -38,8 +38,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.position.set(GameSettings.SCREEN_WIDTH / 2 + (pinkMonster.getBody().getPosition().x - Assets.playerUI.getWidth() / 2)
-                , GameSettings.SCREEN_HEIGHT / 2, 0);
+        camera.position.set(GameSettings.SCREEN_WIDTH / 3 + (pinkMonster.getBody().getPosition().x - Assets.playerUI.getWidth() / 2)
+                , GameSettings.SCREEN_HEIGHT / 2 + (pinkMonster.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
         camera.update();
         world.step(delta, 6, 2);
 
@@ -51,7 +51,8 @@ public class GameScreen extends ScreenAdapter {
         game.batch.begin();
         pinkMonster.render(game.batch);
         pinkMonster.update(delta);
-        game.batch.draw(Assets.playerUI, 0 + (pinkMonster.getBody().getPosition().x - Assets.playerUI.getWidth() / 2), GameSettings.SCREEN_HEIGHT - Assets.playerUI.getHeight());
+        game.batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
+                camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
         game.batch.end();
     }
 

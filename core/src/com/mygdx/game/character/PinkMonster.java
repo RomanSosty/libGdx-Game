@@ -42,16 +42,16 @@ public class PinkMonster {
     private void makeBody() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(32, 48);
+        bodyDef.position.set(150, 250);
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Assets.playerTexture.getWidth() / 2, Assets.playerTexture.getHeight() / 2);
+        shape.setAsBox(Assets.playerTexture.getWidth() / 3, Assets.playerTexture.getHeight() / 2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
         body.createFixture(fixtureDef);
-        body.setGravityScale(4.0f);
+        body.setGravityScale(0.0f);
         shape.dispose();
     }
 
