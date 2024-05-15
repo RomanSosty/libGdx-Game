@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.character.PinkMonster;
+import com.mygdx.game.character.Player;
 import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.settings.Assets;
 import com.mygdx.game.settings.GameContactListener;
@@ -21,7 +21,8 @@ public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     private final World world;
     private final Box2DDebugRenderer debugRenderer;
-    private PinkMonster pinkMonster;
+
+    private Player player;
     private WoodEnemy woodEnemy;
     private GroundMap groundMap;
 
@@ -35,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        pinkMonster = new PinkMonster(world);
+        player = new Player(world);
         woodEnemy = new WoodEnemy(world);
         groundMap = new GroundMap(world, camera);
     }
@@ -43,22 +44,22 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.position.set(GameSettings.SCREEN_WIDTH / 3 + (pinkMonster.getBody().getPosition().x - Assets.playerUI.getWidth() / 2)
-                , GameSettings.SCREEN_HEIGHT / 2 + (pinkMonster.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
+        camera.position.set((float) GameSettings.SCREEN_WIDTH / 3 + (player.getBody().getPosition().x - (float) Assets.playerUI.getWidth() / 2)
+                , (float) GameSettings.SCREEN_HEIGHT / 2 + (player.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
         camera.update();
         world.step(delta, 6, 2);
 
         game.batch.setProjectionMatrix(camera.combined);
-        debugRenderer.render(world, camera.combined);
 
         groundMap.render();
+        debugRenderer.render(world, camera.combined);
 
         game.batch.begin();
         woodEnemy.render(game.batch);
         woodEnemy.update(delta);
 
-        pinkMonster.render(game.batch);
-        pinkMonster.update(delta);
+        player.render(game.batch);
+        player.update(delta);
         game.batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
                 camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
         game.batch.end();
@@ -66,6 +67,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-        pinkMonster.dispose();
+        player.dispose();
+        woodEnemy.dispose();
     }
 }

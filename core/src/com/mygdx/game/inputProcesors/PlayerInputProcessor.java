@@ -3,16 +3,16 @@ package com.mygdx.game.inputProcesors;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.mygdx.game.character.PinkMonster;
+import com.mygdx.game.character.Player;
 
-public class PinkMonsterInputProcessor extends InputAdapter {
+public class PlayerInputProcessor extends InputAdapter {
     private final Body body;
-    private final PinkMonster pinkMonster;
+    private final Player player;
     private final float speed = 50f;
 
-    public PinkMonsterInputProcessor(PinkMonster pinkMonster) {
-        this.pinkMonster = pinkMonster;
-        this.body = pinkMonster.getBody();
+    public PlayerInputProcessor(Player player) {
+        this.player = player;
+        this.body = player.getBody();
     }
 
     @Override
@@ -20,19 +20,22 @@ public class PinkMonsterInputProcessor extends InputAdapter {
         switch (keycode) {
             case Input.Keys.A:
                 body.setLinearVelocity(-speed, body.getLinearVelocity().y);
-                pinkMonster.setIsWalking(true);
+                player.setIsWalking(true);
                 break;
             case Input.Keys.D:
                 body.setLinearVelocity(speed, body.getLinearVelocity().y);
-                pinkMonster.setIsWalking(true);
+                player.setIsWalking(true);
                 break;
             case Input.Keys.W:
                 body.setLinearVelocity(body.getLinearVelocity().x, speed);
-                pinkMonster.setIsWalking(true);
+                player.setIsWalking(true);
                 break;
             case Input.Keys.S:
                 body.setLinearVelocity(body.getLinearVelocity().x, -speed);
-                pinkMonster.setIsWalking(true);
+                player.setIsWalking(true);
+                break;
+            case Input.Keys.SPACE:
+                player.setIsAttacking(true);
                 break;
         }
         return true;
@@ -44,12 +47,15 @@ public class PinkMonsterInputProcessor extends InputAdapter {
             case Input.Keys.A:
             case Input.Keys.D:
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
-                pinkMonster.setIsWalking(false);
+                player.setIsWalking(false);
                 break;
             case Input.Keys.W:
             case Input.Keys.S:
                 body.setLinearVelocity(body.getLinearVelocity().x, 0);
-                pinkMonster.setIsWalking(false);
+                player.setIsWalking(false);
+                break;
+            case Input.Keys.SPACE:
+                player.setIsAttacking(false);
                 break;
         }
         return true;
