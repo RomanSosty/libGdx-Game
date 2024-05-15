@@ -32,9 +32,12 @@ public class MainMenu extends ScreenAdapter {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
+
+        //Draw main menu buttons
         game.batch.draw(Assets.playButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 200);
         game.batch.draw(Assets.optionsButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 150);
         game.batch.draw(Assets.quitButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 100);
+        
         game.batch.end();
     }
 

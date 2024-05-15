@@ -30,7 +30,10 @@ public class GameScreen extends ScreenAdapter {
         this.game = game;
         this.camera = camera;
         world = new World(new Vector2(0, -9.81f), true);
+
+        //Collision controll
         world.setContactListener(new GameContactListener());
+        //Only for debug
         debugRenderer = new Box2DDebugRenderer(true, true, true, true, true, true);
     }
 
@@ -47,19 +50,21 @@ public class GameScreen extends ScreenAdapter {
         camera.position.set((float) GameSettings.SCREEN_WIDTH / 3 + (player.getBody().getPosition().x - (float) Assets.playerUI.getWidth() / 2)
                 , (float) GameSettings.SCREEN_HEIGHT / 2 + (player.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
         camera.update();
+
         world.step(delta, 6, 2);
-
         game.batch.setProjectionMatrix(camera.combined);
-
         groundMap.render();
+        //Only for debug
         debugRenderer.render(world, camera.combined);
 
         game.batch.begin();
+        //Enemy render
         woodEnemy.render(game.batch);
         woodEnemy.update(delta);
-
+        //Player render
         player.render(game.batch);
         player.update(delta);
+
         game.batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
                 camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
         game.batch.end();

@@ -15,10 +15,9 @@ public class WoodEnemy extends Character {
     private final Sprite sprite;
     private final Texture texture;
     private final Animation<TextureRegion> walkAnimation;
-    private float speed = 30f;
 
     public WoodEnemy(World world) {
-        super(world);
+        super(world, 30f);
         texture = Assets.woodEnemyTexture;
         body = makeBody(400, 350, texture, this);
         walkAnimation = makeAnimation(Assets.woodEnemyWalkSheet, 4);

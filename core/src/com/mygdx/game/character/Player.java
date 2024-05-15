@@ -22,7 +22,7 @@ public class Player extends Character {
     private boolean isAttacking = false;
 
     public Player(World world) {
-        super(world);
+        super(world, 50f);
         texture = Assets.playerTexture;
 
         body = makeBody(150, 250, texture, this);

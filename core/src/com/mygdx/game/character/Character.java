@@ -9,10 +9,11 @@ import com.badlogic.gdx.utils.Array;
 public abstract class Character {
     private final World world;
     protected float stateTime = 0f;
+    protected float speed = 0f;
 
-    public Character(World world) {
-
+    public Character(World world, float speed) {
         this.world = world;
+        this.speed = speed;
     }
 
     protected Body makeBody(int x, int y, Texture texture, Object object) {
@@ -28,6 +29,7 @@ public abstract class Character {
 
         body.createFixture(fixtureDef);
         body.setGravityScale(0.0f);
+        //Data for collison difference
         body.setUserData(object);
         shape.dispose();
         return body;
@@ -42,6 +44,10 @@ public abstract class Character {
         }
 
         return new Animation<>(0.1f, walkFrames);
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 
 }

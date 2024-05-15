@@ -8,7 +8,6 @@ import com.mygdx.game.character.Player;
 public class PlayerInputProcessor extends InputAdapter {
     private final Body body;
     private final Player player;
-    private final float speed = 50f;
 
     public PlayerInputProcessor(Player player) {
         this.player = player;
@@ -19,19 +18,19 @@ public class PlayerInputProcessor extends InputAdapter {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Input.Keys.A:
-                body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+                body.setLinearVelocity(-player.getSpeed(), body.getLinearVelocity().y);
                 player.setIsWalking(true);
                 break;
             case Input.Keys.D:
-                body.setLinearVelocity(speed, body.getLinearVelocity().y);
+                body.setLinearVelocity(player.getSpeed(), body.getLinearVelocity().y);
                 player.setIsWalking(true);
                 break;
             case Input.Keys.W:
-                body.setLinearVelocity(body.getLinearVelocity().x, speed);
+                body.setLinearVelocity(body.getLinearVelocity().x, player.getSpeed());
                 player.setIsWalking(true);
                 break;
             case Input.Keys.S:
-                body.setLinearVelocity(body.getLinearVelocity().x, -speed);
+                body.setLinearVelocity(body.getLinearVelocity().x, -player.getSpeed());
                 player.setIsWalking(true);
                 break;
             case Input.Keys.SPACE:

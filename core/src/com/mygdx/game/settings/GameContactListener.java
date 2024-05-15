@@ -12,21 +12,21 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        //Time for duplicate collision
         long currentTime = System.currentTimeMillis();
 
         Object objectA = contact.getFixtureA().getBody().getUserData();
         Object objectB = contact.getFixtureB().getBody().getUserData();
 
+        //Detect collision for Enemy and wall
         if (currentTime - lastCollisionTime > 1) {
             if (objectA instanceof WoodEnemy && objectB instanceof GroundMap) {
                 ((WoodEnemy) objectA).turnAroud();
             } else if (objectA instanceof GroundMap && objectB instanceof WoodEnemy) {
                 ((WoodEnemy) objectB).turnAroud();
             }
-
             lastCollisionTime = currentTime;
         }
-   
     }
 
     @Override
