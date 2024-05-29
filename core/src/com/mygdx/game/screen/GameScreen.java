@@ -3,11 +3,13 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.character.Character;
 import com.mygdx.game.character.Player;
 import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.settings.Assets;
@@ -23,7 +25,7 @@ public class GameScreen extends ScreenAdapter {
     private final Box2DDebugRenderer debugRenderer;
 
     private Player player;
-    private WoodEnemy woodEnemy;
+    private WoodEnemy woodEnemy, woodEnemy2;
     private GroundMap groundMap;
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
@@ -40,7 +42,8 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         player = new Player(world);
-        woodEnemy = new WoodEnemy(world);
+        woodEnemy = new WoodEnemy(world, 400, 350);
+        woodEnemy2 = new WoodEnemy(world, 400, 150);
         groundMap = new GroundMap(world, camera);
     }
 
@@ -59,11 +62,11 @@ public class GameScreen extends ScreenAdapter {
 
         game.batch.begin();
         //Enemy render
-        woodEnemy.render(game.batch);
-        woodEnemy.update(delta);
+        characterRender(woodEnemy, game.batch, delta, world);
+        characterRender(woodEnemy2, game.batch, delta, world);
+
         //Player render
-        player.render(game.batch);
-        player.update(delta);
+        characterRender(player, game.batch, delta, world);
 
         game.batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
                 camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
@@ -74,5 +77,14 @@ public class GameScreen extends ScreenAdapter {
     public void hide() {
         player.dispose();
         woodEnemy.dispose();
+    }
+
+    private void characterRender(Character character, SpriteBatch batch, float delta, World world) {
+        if (!character.isDead()) {
+            character.render(batch);
+            character.update(delta);
+        } else if (character.isDead() && character.getBody() != null) {
+            character.dispose();
+        }
     }
 }

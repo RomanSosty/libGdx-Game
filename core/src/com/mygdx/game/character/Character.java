@@ -2,14 +2,21 @@ package com.mygdx.game.character;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
 public abstract class Character {
     private final World world;
+    protected Texture texture;
+    protected Sprite sprite;
+    protected Body body;
     protected float stateTime = 0f;
     protected float speed = 0f;
+    protected boolean isDead = false;
 
     public Character(World world, float speed) {
         this.world = world;
@@ -46,8 +53,40 @@ public abstract class Character {
         return new Animation<>(0.1f, walkFrames);
     }
 
+    public void render(SpriteBatch batch) {
+
+        sprite.setPosition(body.getPosition().x - sprite.getWidth() / 2,
+                body.getPosition().y - sprite.getHeight() / 2);
+
+        sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+
+        sprite.draw(batch);
+    }
+
     public float getSpeed() {
         return speed;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public void update(float delta) {
+    }
+
+    public void dispose() {
+        texture.dispose();
+        world.destroyBody(body);
+        body = null;
+    }
+
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead() {
+        isDead = true;
     }
 
 }

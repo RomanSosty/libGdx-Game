@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.character.Player;
 import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.world.GroundMap;
 
@@ -26,6 +27,12 @@ public class GameContactListener implements ContactListener {
                 ((WoodEnemy) objectB).turnAroud();
             }
             lastCollisionTime = currentTime;
+        }
+
+        if (objectA instanceof WoodEnemy && objectB instanceof Player) {
+            ((WoodEnemy) objectA).setIsDead();
+        } else if (objectA instanceof Player && objectB instanceof WoodEnemy) {
+            ((WoodEnemy) objectB).setIsDead();
         }
     }
 
