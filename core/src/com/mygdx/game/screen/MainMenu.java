@@ -12,16 +12,22 @@ import com.mygdx.game.settings.GameSettings;
 
 public class MainMenu extends ScreenAdapter {
     private final MyGdxGame game;
+    private final int width, height, buttonWidth, buttonHeight;
     public OrthographicCamera camera;
 
     public MainMenu(MyGdxGame game) {
         this.game = game;
+
+        width = GameSettings.SCREEN_WIDTH;
+        height = GameSettings.SCREEN_HEIGHT;
+        buttonWidth = GameSettings.BUTTTON_WIDTH;
+        buttonHeight = GameSettings.BUTTTON_HEIGHT;
     }
 
     @Override
     public void show() {
-        camera = new OrthographicCamera(GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
-        camera.position.set((float) GameSettings.SCREEN_WIDTH / 2, (float) GameSettings.SCREEN_HEIGHT / 2, 0);
+        camera = new OrthographicCamera(width, height);
+        camera.position.set((float) width / 2, (float) height / 2, 0);
 
         Gdx.input.setInputProcessor(new MainMenuInputProcessor(this, game));
     }
@@ -32,12 +38,7 @@ public class MainMenu extends ScreenAdapter {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-
-        //Draw main menu buttons
-        game.batch.draw(Assets.playButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 200);
-        game.batch.draw(Assets.optionsButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 150);
-        game.batch.draw(Assets.quitButton, (float) GameSettings.SCREEN_WIDTH / 2 - (float) GameSettings.BUTTTON_WIDTH / 2, 100);
-        
+        drawMenuButtons();
         game.batch.end();
     }
 
@@ -46,19 +47,26 @@ public class MainMenu extends ScreenAdapter {
         Gdx.input.setInputProcessor(null);
     }
 
-    public boolean isQuit(float x, float y) {
-        int width = (GameSettings.SCREEN_WIDTH / 2 - GameSettings.BUTTTON_WIDTH / 2) + GameSettings.BUTTTON_WIDTH;
-        int height = 100 + GameSettings.BUTTTON_HEIGHT;
+    public boolean selectQuit(float x, float y) {
+        int widthQuitArea = (width / 2 - buttonWidth / 2) + buttonWidth;
+        int heightQuitArea = 100 + buttonHeight;
 
-        return x >= 50 && x <= width
-                && y >= 110 && y <= height;
+        return x >= 50 && x <= widthQuitArea
+                && y >= 110 && y <= heightQuitArea;
     }
 
-    public boolean isPlay(float x, float y) {
-        int width = (GameSettings.SCREEN_WIDTH / 2 - GameSettings.BUTTTON_WIDTH / 2) + GameSettings.BUTTTON_WIDTH;
-        int height = 200 + GameSettings.BUTTTON_HEIGHT;
+    public boolean selectPlay(float x, float y) {
+        int widthPlayArea = (width / 2 - buttonWidth / 2) + buttonWidth;
+        int heightPlayArea = 200 + buttonHeight;
 
-        return x >= 50 && x <= width
-                && y >= 210 && y <= height;
+        return x >= 50 && x <= widthPlayArea
+                && y >= 210 && y <= heightPlayArea;
+    }
+
+    private void drawMenuButtons() {
+        game.batch.draw(Assets.playButton, (float) width / 2 - (float) buttonWidth / 2, 200);
+        game.batch.draw(Assets.optionsButton, (float) width / 2 - (float) buttonWidth / 2, 150);
+        game.batch.draw(Assets.quitButton, (float) width / 2 - (float) buttonWidth / 2, 100);
+
     }
 }

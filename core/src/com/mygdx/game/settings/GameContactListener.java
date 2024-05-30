@@ -10,25 +10,34 @@ import com.mygdx.game.world.GroundMap;
 
 public class GameContactListener implements ContactListener {
     private long lastCollisionTime = 0;
+    private Object objectA, objectB;
 
     @Override
     public void beginContact(Contact contact) {
-        //Time for duplicate collision
+        //Time for delete duplicate collision
         long currentTime = System.currentTimeMillis();
 
-        Object objectA = contact.getFixtureA().getBody().getUserData();
-        Object objectB = contact.getFixtureB().getBody().getUserData();
+        objectA = contact.getFixtureA().getBody().getUserData();
+        objectB = contact.getFixtureB().getBody().getUserData();
 
-        //Detect collision for Enemy and wall
         if (currentTime - lastCollisionTime > 1) {
-            if (objectA instanceof WoodEnemy && objectB instanceof GroundMap) {
-                ((WoodEnemy) objectA).turnAroud();
-            } else if (objectA instanceof GroundMap && objectB instanceof WoodEnemy) {
-                ((WoodEnemy) objectB).turnAroud();
-            }
+            enemyHitWall();
+            playerHitEnemy();
+
             lastCollisionTime = currentTime;
         }
 
+    }
+
+    private void enemyHitWall() {
+        if (objectA instanceof WoodEnemy && objectB instanceof GroundMap) {
+            ((WoodEnemy) objectA).turnAroud();
+        } else if (objectA instanceof GroundMap && objectB instanceof WoodEnemy) {
+            ((WoodEnemy) objectB).turnAroud();
+        }
+    }
+
+    private void playerHitEnemy() {
         if (objectA instanceof WoodEnemy && objectB instanceof Player) {
             ((WoodEnemy) objectA).setIsDead();
         } else if (objectA instanceof Player && objectB instanceof WoodEnemy) {
@@ -38,16 +47,13 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }

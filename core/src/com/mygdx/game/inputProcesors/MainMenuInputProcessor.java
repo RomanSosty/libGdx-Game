@@ -26,10 +26,10 @@ public class MainMenuInputProcessor extends InputAdapter {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         camera.unproject(clickCoordinates);
 
-        if (mainMenu.isPlay(clickCoordinates.x, clickCoordinates.y)) {
+        if (mainMenu.selectPlay(clickCoordinates.x, clickCoordinates.y)) {
             game.setScreen(new GameScreen(game, camera));
         }
-        if (mainMenu.isQuit(clickCoordinates.x, clickCoordinates.y)) {
+        if (mainMenu.selectQuit(clickCoordinates.x, clickCoordinates.y)) {
             Gdx.app.exit();
         }
         return false;
