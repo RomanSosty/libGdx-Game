@@ -22,6 +22,7 @@ public class MyGdxGame extends Game {
     public void dispose() {
         batch.dispose();
         shapeRenderer.dispose();
+        Assets.dispose();
     }
 
 }

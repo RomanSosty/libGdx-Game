@@ -19,25 +19,51 @@ public class Assets {
     }
 
     public static void load() {
+        loadGameUI();
+        loadPlayer();
+        loadEnemy();
+        loadGameSetting();
+    }
+
+    private static void loadGameUI() {
         playButton = loadTexture("buttons/play.png");
         optionsButton = loadTexture("buttons/options.png");
         quitButton = loadTexture("buttons/quit.png");
+    }
 
-        //Player Assets
+    private static void loadGameSetting() {
+        map = new TmxMapLoader().load("map/level-1.tmx");
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/the_field_of_dreams.mp3"));
+        music.setLooping(true);
+        music.play();
+    }
+
+    private static void loadPlayer() {
         playerUI = loadTexture("UI.png");
         playerTexture = loadTexture("characters/Pink_Monster/Pink_Monster.png");
         playerWalkSheet = loadTexture("characters/Pink_Monster/Pink_Monster_Walk_6.png");
         playerAttack = loadTexture("characters/Pink_Monster/Pink_Monster_Attack2_6.png");
+    }
 
-        //Wood enemy assets
+    private static void loadEnemy() {
         woodEnemyTexture = loadTexture("characters/WoodLog.png");
         woodEnemyWalkSheet = loadTexture("characters/logWalk.png");
+    }
 
-        map = new TmxMapLoader().load("map/level-1.tmx");
+    public static void dispose() {
+        music.dispose();
+        playButton.dispose();
+        optionsButton.dispose();
+        quitButton.dispose();
+        map.dispose();
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/the_field_of_dreams.mp3"));
-        music.setLooping(true);
-        music.play();
+        playerUI.dispose();
+        playerTexture.dispose();
+        playerWalkSheet.dispose();
+        playerAttack.dispose();
+
+        woodEnemyTexture.dispose();
+        woodEnemyTexture.dispose();
     }
 
 }

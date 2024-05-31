@@ -47,8 +47,11 @@ public class GroundMap {
     }
 
     public void render() {
-
         renderer.setView(camera);
         renderer.render();
+    }
+
+    public void dispose() {
+        renderer.dispose();
     }
 }

@@ -19,64 +19,51 @@ import com.mygdx.game.world.GroundMap;
 
 public class GameScreen extends ScreenAdapter {
 
-    private final MyGdxGame game;
     private final OrthographicCamera camera;
-    private final World world;
     private final Box2DDebugRenderer debugRenderer;
+    private final SpriteBatch batch;
 
+    private World world;
     private Player player;
     private WoodEnemy woodEnemy, woodEnemy2;
     private GroundMap groundMap;
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
-        this.game = game;
+        this.batch = game.batch;
         this.camera = camera;
-        world = new World(new Vector2(0, -9.81f), true);
 
-        //Collision controll
-        world.setContactListener(new GameContactListener());
-        //Only for debug
+        setWorld();
         debugRenderer = new Box2DDebugRenderer(true, true, true, true, true, true);
     }
 
     @Override
     public void show() {
-        player = new Player(world);
-        woodEnemy = new WoodEnemy(world, 400, 350);
-        woodEnemy2 = new WoodEnemy(world, 400, 150);
+        createCharacters();
         groundMap = new GroundMap(world, camera);
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        camera.position.set((float) GameSettings.SCREEN_WIDTH / 3 + (player.getBody().getPosition().x - (float) Assets.playerUI.getWidth() / 2)
-                , (float) GameSettings.SCREEN_HEIGHT / 2 + (player.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
-        camera.update();
-
+        setCamera();
         world.step(delta, 6, 2);
-        game.batch.setProjectionMatrix(camera.combined);
         groundMap.render();
-        //Only for debug
         debugRenderer.render(world, camera.combined);
 
-        game.batch.begin();
-        //Enemy render
-        characterRender(woodEnemy, game.batch, delta, world);
-        characterRender(woodEnemy2, game.batch, delta, world);
-
-        //Player render
-        characterRender(player, game.batch, delta, world);
-
-        game.batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
-                camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
-        game.batch.end();
+        batch.begin();
+        characterRender(woodEnemy, batch, delta, world);
+        characterRender(woodEnemy2, batch, delta, world);
+        characterRender(player, batch, delta, world);
+        playerUIRender();
+        batch.end();
     }
 
     @Override
     public void hide() {
         player.dispose();
         woodEnemy.dispose();
+        woodEnemy2.dispose();
+        groundMap.dispose();
     }
 
     private void characterRender(Character character, SpriteBatch batch, float delta, World world) {
@@ -86,5 +73,28 @@ public class GameScreen extends ScreenAdapter {
         } else if (character.isDead() && character.getBody() != null) {
             character.dispose();
         }
+    }
+
+    private void playerUIRender() {
+        batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
+                camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
+    }
+
+    private void setCamera() {
+        camera.position.set((float) GameSettings.SCREEN_WIDTH / 3 + (player.getBody().getPosition().x - (float) Assets.playerUI.getWidth() / 2)
+                , (float) GameSettings.SCREEN_HEIGHT / 2 + (player.getBody().getPosition().y - Assets.playerUI.getHeight()) / 2, 0);
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
+    }
+
+    private void setWorld() {
+        world = new World(new Vector2(0, -9.81f), true);
+        world.setContactListener(new GameContactListener());
+    }
+
+    private void createCharacters() {
+        player = new Player(world);
+        woodEnemy = new WoodEnemy(world, 400, 350);
+        woodEnemy2 = new WoodEnemy(world, 400, 150);
     }
 }
