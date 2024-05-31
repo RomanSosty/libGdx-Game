@@ -9,12 +9,12 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.character.Character;
 import com.mygdx.game.character.Player;
 import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.settings.Assets;
 import com.mygdx.game.settings.GameContactListener;
 import com.mygdx.game.settings.GameSettings;
+import com.mygdx.game.settings.Renderer;
 import com.mygdx.game.world.GroundMap;
 
 public class GameScreen extends ScreenAdapter {
@@ -22,6 +22,7 @@ public class GameScreen extends ScreenAdapter {
     private final OrthographicCamera camera;
     private final Box2DDebugRenderer debugRenderer;
     private final SpriteBatch batch;
+    private final Renderer renderer;
 
     private World world;
     private Player player;
@@ -33,6 +34,7 @@ public class GameScreen extends ScreenAdapter {
         this.camera = camera;
 
         setWorld();
+        renderer = new Renderer(batch, camera);
         debugRenderer = new Box2DDebugRenderer(true, true, true, true, true, true);
     }
 
@@ -51,10 +53,11 @@ public class GameScreen extends ScreenAdapter {
         debugRenderer.render(world, camera.combined);
 
         batch.begin();
-        characterRender(woodEnemy, batch, delta, world);
-        characterRender(woodEnemy2, batch, delta, world);
-        characterRender(player, batch, delta, world);
-        playerUIRender();
+        renderer.characterRender(woodEnemy, delta, world);
+        renderer.characterRender(woodEnemy2, delta, world);
+        renderer.characterRender(player, delta, world);
+        renderer.playerUIRender();
+        renderer.healthRender(player);
         batch.end();
     }
 
@@ -64,32 +67,6 @@ public class GameScreen extends ScreenAdapter {
         woodEnemy.dispose();
         woodEnemy2.dispose();
         groundMap.dispose();
-    }
-
-    private void characterRender(Character character, SpriteBatch batch, float delta, World world) {
-        if (!character.isDead()) {
-            character.render(batch);
-            character.update(delta);
-        } else if (character.isDead() && character.getBody() != null) {
-            character.dispose();
-        }
-    }
-
-    private void playerUIRender() {
-        float playerUiXposition = camera.position.x - camera.viewportWidth / 2;
-        float playerUiYposition = camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight();
-
-        batch.draw(Assets.playerUI, playerUiXposition, playerUiYposition);
-        healthRender();
-    }
-
-    private void healthRender() {
-        int playerHealthXoffset = 42;
-        int playerHealthYoffset = 5;
-        float playerHealthXposition = camera.position.x - camera.viewportWidth / 2 + playerHealthXoffset;
-        float playerHealthYposition = camera.position.y + camera.viewportHeight / 2 - Assets.playerHealth.getHeight() - playerHealthYoffset;
-
-        batch.draw(Assets.playerHealth, playerHealthXposition, playerHealthYposition, Assets.playerHealth.getWidth() * player.getHealth(), Assets.playerHealth.getHeight());
     }
 
     private void setCamera() {
