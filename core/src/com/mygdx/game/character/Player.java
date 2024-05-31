@@ -15,6 +15,7 @@ public class Player extends Character {
 
     private boolean isWalking = false;
     private boolean isAttacking = false;
+    private float health = 1f;
 
     public Player(World world) {
         super(world, 50f);
@@ -46,6 +47,14 @@ public class Player extends Character {
 
     public boolean isAttacking() {
         return isAttacking;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void setDownHealth() {
+        health -= 0.2f;
     }
 
     private void setAnimation(float delta) {

@@ -21,8 +21,8 @@ public class GameContactListener implements ContactListener {
         long diffCurrentAndLastCollisionTime = currentTime - lastCollisionTime;
 
         if (diffCurrentAndLastCollisionTime > 1) {
-            System.out.println("objekt a :" + objectA + " objekt b:" + objectB);
             enemyHitWall();
+            enemyHitPlayer();
             playerHitEnemy();
             lastCollisionTime = currentTime;
         }
@@ -33,6 +33,14 @@ public class GameContactListener implements ContactListener {
             ((WoodEnemy) objectA).turnAroud();
         } else if (objectA instanceof GroundMap && objectB instanceof WoodEnemy) {
             ((WoodEnemy) objectB).turnAroud();
+        }
+    }
+
+    private void enemyHitPlayer() {
+        if (objectA instanceof WoodEnemy && objectB instanceof Player) {
+            ((Player) objectB).setDownHealth();
+        } else if (objectA instanceof Player && objectB instanceof WoodEnemy) {
+            ((Player) objectA).setDownHealth();
         }
     }
 
