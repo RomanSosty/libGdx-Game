@@ -80,7 +80,6 @@ public abstract class Character {
         body = null;
     }
 
-
     public boolean isDead() {
         return isDead;
     }
@@ -88,5 +87,4 @@ public abstract class Character {
     public void setIsDead() {
         isDead = true;
     }
-
 }

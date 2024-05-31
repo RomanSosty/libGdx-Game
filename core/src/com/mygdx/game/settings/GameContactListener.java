@@ -14,19 +14,18 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        setCollisionObject(contact);
+
         //Time for delete duplicate collision
         long currentTime = System.currentTimeMillis();
+        long diffCurrentAndLastCollisionTime = currentTime - lastCollisionTime;
 
-        objectA = contact.getFixtureA().getBody().getUserData();
-        objectB = contact.getFixtureB().getBody().getUserData();
-
-        if (currentTime - lastCollisionTime > 1) {
+        if (diffCurrentAndLastCollisionTime > 1) {
+            System.out.println("objekt a :" + objectA + " objekt b:" + objectB);
             enemyHitWall();
             playerHitEnemy();
-
             lastCollisionTime = currentTime;
         }
-
     }
 
     private void enemyHitWall() {
@@ -38,11 +37,16 @@ public class GameContactListener implements ContactListener {
     }
 
     private void playerHitEnemy() {
-        if (objectA instanceof WoodEnemy && objectB instanceof Player) {
+        if (objectA instanceof WoodEnemy && objectB instanceof Player && ((Player) objectB).isAttacking()) {
             ((WoodEnemy) objectA).setIsDead();
-        } else if (objectA instanceof Player && objectB instanceof WoodEnemy) {
+        } else if (objectA instanceof Player && objectB instanceof WoodEnemy && ((Player) objectA).isAttacking()) {
             ((WoodEnemy) objectB).setIsDead();
         }
+    }
+
+    private void setCollisionObject(Contact contact) {
+        objectA = contact.getFixtureA().getBody().getUserData();
+        objectB = contact.getFixtureB().getBody().getUserData();
     }
 
     @Override

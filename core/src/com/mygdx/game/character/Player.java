@@ -33,6 +33,22 @@ public class Player extends Character {
 
     @Override
     public void update(float delta) {
+        setAnimation(delta);
+    }
+
+    public void setIsWalking(boolean isWalking) {
+        this.isWalking = isWalking;
+    }
+
+    public void setIsAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
+    }
+
+    public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    private void setAnimation(float delta) {
         stateTime += delta;
 
         if (isWalking) {
@@ -42,13 +58,5 @@ public class Player extends Character {
         } else {
             sprite.setRegion(texture);
         }
-    }
-
-    public void setIsWalking(boolean isWalking) {
-        this.isWalking = isWalking;
-    }
-
-    public void setIsAttacking(boolean isAttacking) {
-        this.isAttacking = isAttacking;
     }
 }
