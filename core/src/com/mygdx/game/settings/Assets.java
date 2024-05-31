@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class Assets {
 
     public static Texture playButton, optionsButton, quitButton;
-    public static Texture playerUI, playerTexture, playerWalkSheet, playerAttack;
+    public static Texture playerUI, playerTexture, playerWalkSheet, playerAttack, playerHealth;
     public static Texture woodEnemyTexture, woodEnemyWalkSheet;
     public static Music music;
     public static TiledMap map;
@@ -40,6 +40,7 @@ public class Assets {
 
     private static void loadPlayer() {
         playerUI = loadTexture("UI.png");
+        playerHealth = loadTexture("health.png");
         playerTexture = loadTexture("characters/Pink_Monster/Pink_Monster.png");
         playerWalkSheet = loadTexture("characters/Pink_Monster/Pink_Monster_Walk_6.png");
         playerAttack = loadTexture("characters/Pink_Monster/Pink_Monster_Attack2_6.png");

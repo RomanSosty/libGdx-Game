@@ -76,8 +76,20 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void playerUIRender() {
-        batch.draw(Assets.playerUI, camera.position.x - camera.viewportWidth / 2,
-                camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight());
+        float playerUiXposition = camera.position.x - camera.viewportWidth / 2;
+        float playerUiYposition = camera.position.y + camera.viewportHeight / 2 - Assets.playerUI.getHeight();
+
+        batch.draw(Assets.playerUI, playerUiXposition, playerUiYposition);
+        healthRender();
+    }
+
+    private void healthRender() {
+        int playerHealthXoffset = 42;
+        int playerHealthYoffset = 5;
+        float playerHealthXposition = camera.position.x - camera.viewportWidth / 2 + playerHealthXoffset;
+        float playerHealthYposition = camera.position.y + camera.viewportHeight / 2 - Assets.playerHealth.getHeight() - playerHealthYoffset;
+
+        batch.draw(Assets.playerHealth, playerHealthXposition, playerHealthYposition, Assets.playerHealth.getWidth() * player.getHealth(), Assets.playerHealth.getHeight());
     }
 
     private void setCamera() {
