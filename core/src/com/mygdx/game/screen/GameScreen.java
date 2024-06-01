@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.character.Player;
@@ -23,10 +24,9 @@ public class GameScreen extends ScreenAdapter {
     private final Box2DDebugRenderer debugRenderer;
     private final SpriteBatch batch;
     private final Renderer renderer;
-
+    private final Array<WoodEnemy> woodEnemies = new Array<>();
     private World world;
     private Player player;
-    private WoodEnemy woodEnemy, woodEnemy2;
     private GroundMap groundMap;
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
@@ -53,8 +53,9 @@ public class GameScreen extends ScreenAdapter {
         debugRenderer.render(world, camera.combined);
 
         batch.begin();
-        renderer.characterRender(woodEnemy, delta, world);
-        renderer.characterRender(woodEnemy2, delta, world);
+        for (WoodEnemy enemy : woodEnemies) {
+            renderer.characterRender(enemy, delta, world);
+        }
         renderer.characterRender(player, delta, world);
         renderer.playerUIRender();
         renderer.healthRender(player);
@@ -64,8 +65,9 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void hide() {
         player.dispose();
-        woodEnemy.dispose();
-        woodEnemy2.dispose();
+        for (WoodEnemy enemy : woodEnemies) {
+            enemy.dispose();
+        }
         groundMap.dispose();
     }
 
@@ -83,7 +85,10 @@ public class GameScreen extends ScreenAdapter {
 
     private void createCharacters() {
         player = new Player(world);
-        woodEnemy = new WoodEnemy(world, 400, 350);
-        woodEnemy2 = new WoodEnemy(world, 400, 150);
+        
+        WoodEnemy woodEnemy = new WoodEnemy(world, 400, 350);
+        WoodEnemy woodEnemy2 = new WoodEnemy(world, 400, 150);
+        woodEnemies.add(woodEnemy);
+        woodEnemies.add(woodEnemy2);
     }
 }
