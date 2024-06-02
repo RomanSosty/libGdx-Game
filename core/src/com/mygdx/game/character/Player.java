@@ -55,6 +55,13 @@ public class Player extends Character {
 
     public void setDownHealth() {
         health -= 0.2f;
+        playerDeath();
+    }
+
+    public void playerDeath() {
+        if (health <= 0.1) {
+            setIsDead();
+        }
     }
 
     private void setAnimation(float delta) {
