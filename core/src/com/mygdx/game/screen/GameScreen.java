@@ -25,6 +25,7 @@ public class GameScreen extends ScreenAdapter {
     private final SpriteBatch batch;
     private final Renderer renderer;
     private final Array<WoodEnemy> woodEnemies = new Array<>();
+    private final MyGdxGame game;
     private World world;
     private Player player;
     private GroundMap groundMap;
@@ -32,6 +33,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
         this.batch = game.batch;
         this.camera = camera;
+        this.game = game;
 
         setWorld();
         renderer = new Renderer(batch, camera);
@@ -49,25 +51,26 @@ public class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         setCamera();
         world.step(delta, 6, 2);
-        groundMap.render();
-        debugRenderer.render(world, camera.combined);
 
-        batch.begin();
-        for (WoodEnemy enemy : woodEnemies) {
-            renderer.characterRender(enemy, delta, world);
+        if (player.isDead()) {
+            game.setScreen(new MainMenu(game));
+        } else {
+            groundMap.render();
+            debugRenderer.render(world, camera.combined);
+
+            batch.begin();
+            for (WoodEnemy enemy : woodEnemies) {
+                renderer.characterRender(enemy, delta);
+            }
+            renderer.playerUIRender();
+            renderer.characterRender(player, delta);
+            renderer.healthRender(player);
+            batch.end();
         }
-        renderer.characterRender(player, delta, world);
-        renderer.playerUIRender();
-        renderer.healthRender(player);
-        batch.end();
     }
 
     @Override
     public void hide() {
-        player.dispose();
-        for (WoodEnemy enemy : woodEnemies) {
-            enemy.dispose();
-        }
         groundMap.dispose();
     }
 
@@ -85,7 +88,7 @@ public class GameScreen extends ScreenAdapter {
 
     private void createCharacters() {
         player = new Player(world);
-        
+
         WoodEnemy woodEnemy = new WoodEnemy(world, 400, 350);
         WoodEnemy woodEnemy2 = new WoodEnemy(world, 400, 150);
         woodEnemies.add(woodEnemy);

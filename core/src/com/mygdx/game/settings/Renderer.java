@@ -2,7 +2,6 @@ package com.mygdx.game.settings;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.character.Character;
 import com.mygdx.game.character.Player;
 
@@ -15,7 +14,7 @@ public class Renderer {
         this.camera = camera;
     }
 
-    public void characterRender(Character character, float delta, World world) {
+    public void characterRender(Character character, float delta) {
         if (!character.isDead()) {
             character.render(batch);
             character.update(delta);
