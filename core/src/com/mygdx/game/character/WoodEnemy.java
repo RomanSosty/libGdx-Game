@@ -30,5 +30,4 @@ public class WoodEnemy extends Character {
     public void turnAroud() {
         speed *= -1;
     }
-
 }
