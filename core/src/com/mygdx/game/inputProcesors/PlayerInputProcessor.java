@@ -1,5 +1,6 @@
 package com.mygdx.game.inputProcesors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -35,6 +36,9 @@ public class PlayerInputProcessor extends InputAdapter {
                 break;
             case Input.Keys.SPACE:
                 player.setIsAttacking(true);
+                break;
+            case Input.Keys.ESCAPE:
+                Gdx.app.exit();
                 break;
         }
         return true;
