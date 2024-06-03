@@ -8,3 +8,5 @@ If you read my code, I welcome your feedback and advice.
 You can move around using the WSAD keyboard and perform an attack using the SPACE key. 
 Enemies can hit you and take 20% of your health.
 
+### Assets
+For my game, I use some free asssets from https://opengameart.org.
