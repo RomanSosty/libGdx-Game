@@ -17,6 +17,7 @@ public class PlayerInputProcessor extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
+        //TODO: divide walk, attack and othet move to different methods
         switch (keycode) {
             case Input.Keys.A:
                 body.setLinearVelocity(-player.getSpeed(), body.getLinearVelocity().y);

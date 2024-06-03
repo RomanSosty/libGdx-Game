@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.character.Character;
 import com.mygdx.game.character.Player;
 
-public class Renderer {
+public class MyRenderer {
     private final SpriteBatch batch;
     private final OrthographicCamera camera;
 
-    public Renderer(SpriteBatch batch, OrthographicCamera camera) {
+    public MyRenderer(SpriteBatch batch, OrthographicCamera camera) {
         this.batch = batch;
         this.camera = camera;
     }

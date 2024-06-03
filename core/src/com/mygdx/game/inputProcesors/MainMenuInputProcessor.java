@@ -17,7 +17,7 @@ public class MainMenuInputProcessor extends InputAdapter {
     public MainMenuInputProcessor(MainMenu mainMenu, MyGdxGame game) {
         this.mainMenu = mainMenu;
         this.game = game;
-        this.camera = mainMenu.camera;
+        this.camera = mainMenu.getCamera();
     }
 
     @Override

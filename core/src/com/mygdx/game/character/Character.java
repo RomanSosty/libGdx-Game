@@ -13,10 +13,10 @@ public abstract class Character {
     private final World world;
     protected Texture texture;
     protected Sprite sprite;
-    protected Body body;
     protected float stateTime = 0f;
-    protected float speed = 0f;
-    protected boolean isDead = false;
+    protected float speed;
+    protected Body body;
+    private boolean isDead = false;
 
     public Character(World world, float speed) {
         this.world = world;
@@ -59,7 +59,6 @@ public abstract class Character {
                 body.getPosition().y - sprite.getHeight() / 2);
 
         sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
-
         sprite.draw(batch);
     }
 
