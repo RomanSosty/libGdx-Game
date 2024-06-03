@@ -29,25 +29,25 @@ public class GameContactListener implements ContactListener {
     }
 
     private void enemyHitWall() {
-        if (objectA instanceof WoodEnemy && objectB instanceof GroundMap) {
+        if (isEnemyAndWall(objectA, objectB)) {
             ((WoodEnemy) objectA).turnAroud();
-        } else if (objectA instanceof GroundMap && objectB instanceof WoodEnemy) {
+        } else if (isEnemyAndWall(objectB, objectA)) {
             ((WoodEnemy) objectB).turnAroud();
         }
     }
 
     private void enemyHitPlayer() {
-        if (objectA instanceof WoodEnemy && objectB instanceof Player) {
+        if (isEnemyAndPlayer(objectA, objectB)) {
             ((Player) objectB).setDownHealth();
-        } else if (objectA instanceof Player && objectB instanceof WoodEnemy) {
+        } else if (isEnemyAndPlayer(objectB, objectA)) {
             ((Player) objectA).setDownHealth();
         }
     }
 
     private void playerHitEnemy() {
-        if (objectA instanceof WoodEnemy && objectB instanceof Player && ((Player) objectB).isAttacking()) {
+        if (isEnemyAndPlayer(objectA, objectB) && ((Player) objectB).isAttacking()) {
             ((WoodEnemy) objectA).setIsDead();
-        } else if (objectA instanceof Player && objectB instanceof WoodEnemy && ((Player) objectA).isAttacking()) {
+        } else if (isEnemyAndPlayer(objectB, objectA) && ((Player) objectA).isAttacking()) {
             ((WoodEnemy) objectB).setIsDead();
         }
     }
@@ -55,6 +55,14 @@ public class GameContactListener implements ContactListener {
     private void setCollisionObject(Contact contact) {
         objectA = contact.getFixtureA().getBody().getUserData();
         objectB = contact.getFixtureB().getBody().getUserData();
+    }
+
+    private boolean isEnemyAndPlayer(Object obj1, Object obj2) {
+        return obj1 instanceof WoodEnemy && obj2 instanceof Player;
+    }
+
+    private boolean isEnemyAndWall(Object obj1, Object obj2) {
+        return obj1 instanceof WoodEnemy && obj2 instanceof GroundMap;
     }
 
     @Override
