@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.mygdx.game.character.Player;
+import com.mygdx.game.world.character.Player;
 
 public class PlayerInputProcessor extends InputAdapter {
     private final Body body;

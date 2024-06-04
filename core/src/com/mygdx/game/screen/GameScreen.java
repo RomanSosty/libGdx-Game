@@ -10,13 +10,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.character.Player;
-import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.settings.Assets;
 import com.mygdx.game.settings.GameSettings;
 import com.mygdx.game.utils.GameContactListener;
 import com.mygdx.game.utils.MyRenderer;
 import com.mygdx.game.world.GroundMap;
+import com.mygdx.game.world.character.Player;
+import com.mygdx.game.world.character.WoodEnemy;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -66,7 +66,7 @@ public class GameScreen extends ScreenAdapter {
         world.step(delta, 6, 2);
 
         //TODO: refaktor, maybe new Class for game logic ?
-        if (player.isDead()) {
+        if (player.isDestroyed()) {
             game.setScreen(new MainMenu(game));
         } else {
             groundMap.render();

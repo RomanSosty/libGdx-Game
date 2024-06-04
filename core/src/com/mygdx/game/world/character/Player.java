@@ -1,32 +1,26 @@
-package com.mygdx.game.character;
+package com.mygdx.game.world.character;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.settings.Assets;
 import com.mygdx.game.utils.inputProcesors.PlayerInputProcessor;
 
 public class Player extends Character {
-    private final Texture texture;
     private final Animation<TextureRegion> walkAnimation, attackAnimation;
-
     private boolean isWalking = false;
     private boolean isAttacking = false;
     private float health = 1f;
 
     public Player(World world) {
-        super(world, 50f);
-        texture = Assets.playerTexture;
+        super(world, 50f, Assets.playerTexture);
 
-        body = makeBody(150, 250, texture, this);
+        makeBody(150, 250, this, world);
+        makeSprite();
+
         walkAnimation = makeAnimation(Assets.playerWalkSheet, 6);
         attackAnimation = makeAnimation(Assets.playerAttack, 6);
-
-        sprite = new Sprite(texture);
-        sprite.setPosition(body.getPosition().x, body.getPosition().y);
 
         PlayerInputProcessor inputProcessor = new PlayerInputProcessor(this);
         Gdx.input.setInputProcessor(inputProcessor);
@@ -60,19 +54,19 @@ public class Player extends Character {
 
     public void playerDeath() {
         if (health <= 0.1) {
-            setIsDead();
+            setIsDestroyed();
         }
     }
 
     private void setAnimation(float delta) {
-        stateTime += delta;
+        setStateTime(delta);
 
         if (isWalking) {
-            sprite.setRegion(walkAnimation.getKeyFrame(stateTime, true));
+            getSprite().setRegion(walkAnimation.getKeyFrame(getStateTime(), true));
         } else if (isAttacking) {
-            sprite.setRegion(attackAnimation.getKeyFrame(stateTime, true));
+            getSprite().setRegion(attackAnimation.getKeyFrame(getStateTime(), true));
         } else {
-            sprite.setRegion(texture);
+            defaultAnimation();
         }
     }
 }

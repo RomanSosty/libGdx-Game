@@ -4,9 +4,9 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.mygdx.game.character.Player;
-import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.world.GroundMap;
+import com.mygdx.game.world.character.Player;
+import com.mygdx.game.world.character.WoodEnemy;
 
 public class GameContactListener implements ContactListener {
     private long lastCollisionTime = 0;
@@ -46,9 +46,9 @@ public class GameContactListener implements ContactListener {
 
     private void playerHitEnemy() {
         if (isEnemyAndPlayer(objectA, objectB) && ((Player) objectB).isAttacking()) {
-            ((WoodEnemy) objectA).setIsDead();
+            ((WoodEnemy) objectA).setIsDestroyed();
         } else if (isEnemyAndPlayer(objectB, objectA) && ((Player) objectA).isAttacking()) {
-            ((WoodEnemy) objectB).setIsDead();
+            ((WoodEnemy) objectB).setIsDestroyed();
         }
     }
 

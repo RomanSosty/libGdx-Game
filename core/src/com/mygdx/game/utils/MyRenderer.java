@@ -2,9 +2,9 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.character.Character;
-import com.mygdx.game.character.Player;
 import com.mygdx.game.settings.Assets;
+import com.mygdx.game.world.character.Character;
+import com.mygdx.game.world.character.Player;
 
 public class MyRenderer {
     private final SpriteBatch batch;
@@ -16,10 +16,10 @@ public class MyRenderer {
     }
 
     public void characterRender(Character character, float delta) {
-        if (!character.isDead()) {
+        if (!character.isDestroyed()) {
             character.render(batch);
             character.update(delta);
-        } else if (character.isDead() && character.getBody() != null) {
+        } else if (character.isDestroyed() && character.getBody() != null) {
             character.dispose();
         }
     }
