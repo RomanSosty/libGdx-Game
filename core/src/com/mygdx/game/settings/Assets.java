@@ -11,6 +11,7 @@ public class Assets {
     public static Texture playButton, optionsButton, quitButton;
     public static Texture playerUI, playerTexture, playerWalkSheet, playerAttack, playerHealth;
     public static Texture woodEnemyTexture, woodEnemyWalkSheet;
+    public static Texture blueCandy;
     public static Music music;
     public static TiledMap map;
 
@@ -23,6 +24,7 @@ public class Assets {
         loadPlayer();
         loadEnemy();
         loadGameSetting();
+        loadCandies();
     }
 
     private static void loadGameUI() {
@@ -49,6 +51,10 @@ public class Assets {
     private static void loadEnemy() {
         woodEnemyTexture = loadTexture("characters/WoodLog.png");
         woodEnemyWalkSheet = loadTexture("characters/logWalk.png");
+    }
+
+    private static void loadCandies() {
+        blueCandy = loadTexture("yaycandies/size1/wrappedsolid_blue.png");
     }
 
     public static void dispose() {
