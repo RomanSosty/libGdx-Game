@@ -52,6 +52,12 @@ public class Player extends Character {
         playerDeath();
     }
 
+    public void setUpHealth() {
+        if (health < 1f) {
+            health += 0.2f;
+        }
+    }
+
     public void playerDeath() {
         if (health <= 0.1) {
             setIsDestroyed();

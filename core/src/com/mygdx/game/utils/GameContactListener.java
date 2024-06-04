@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.world.GroundMap;
+import com.mygdx.game.world.candies.BlueCandy;
 import com.mygdx.game.world.character.Player;
 import com.mygdx.game.world.character.WoodEnemy;
 
@@ -24,6 +25,7 @@ public class GameContactListener implements ContactListener {
             enemyHitWall();
             enemyHitPlayer();
             playerHitEnemy();
+            playerTakeCandy();
             lastCollisionTime = currentTime;
         }
     }
@@ -52,6 +54,16 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    private void playerTakeCandy() {
+        if (isPlayerAndCandy(objectA, objectB)) {
+            ((Player) objectA).setUpHealth();
+            ((BlueCandy) objectB).setIsDestroyed();
+        } else if (isPlayerAndCandy(objectB, objectA)) {
+            ((Player) objectB).setUpHealth();
+            ((BlueCandy) objectA).setIsDestroyed();
+        }
+    }
+
     private void setCollisionObject(Contact contact) {
         objectA = contact.getFixtureA().getBody().getUserData();
         objectB = contact.getFixtureB().getBody().getUserData();
@@ -63,6 +75,10 @@ public class GameContactListener implements ContactListener {
 
     private boolean isEnemyAndWall(Object obj1, Object obj2) {
         return obj1 instanceof WoodEnemy && obj2 instanceof GroundMap;
+    }
+
+    private boolean isPlayerAndCandy(Object obj1, Object obj2) {
+        return obj1 instanceof Player && obj2 instanceof BlueCandy;
     }
 
     @Override
