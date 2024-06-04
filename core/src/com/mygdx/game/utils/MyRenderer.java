@@ -3,7 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.settings.Assets;
-import com.mygdx.game.world.character.Character;
+import com.mygdx.game.world.GameObject;
 import com.mygdx.game.world.character.Player;
 
 public class MyRenderer {
@@ -15,12 +15,12 @@ public class MyRenderer {
         this.camera = camera;
     }
 
-    public void characterRender(Character character, float delta) {
-        if (!character.isDestroyed()) {
-            character.render(batch);
-            character.update(delta);
-        } else if (character.isDestroyed() && character.getBody() != null) {
-            character.dispose();
+    public void objectRenderer(GameObject object, float delta) {
+        if (!object.isDestroyed()) {
+            object.render(batch);
+            object.update(delta);
+        } else if (object.isDestroyed() && object.getBody() != null) {
+            object.dispose();
         }
     }
 

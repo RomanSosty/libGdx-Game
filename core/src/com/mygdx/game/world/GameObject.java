@@ -69,6 +69,9 @@ public abstract class GameObject {
         return isDestroyed;
     }
 
+    public void update(float delta) {
+    }
+
     public void dispose() {
         texture.dispose();
         world.destroyBody(body);

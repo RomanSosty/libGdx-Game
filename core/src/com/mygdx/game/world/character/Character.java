@@ -42,7 +42,4 @@ public abstract class Character extends GameObject {
     public void setStateTime(float stateTime) {
         this.stateTime += stateTime;
     }
-
-    public void update(float delta) {
-    }
 }
