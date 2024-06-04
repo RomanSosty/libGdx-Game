@@ -13,9 +13,9 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.character.Player;
 import com.mygdx.game.character.WoodEnemy;
 import com.mygdx.game.settings.Assets;
-import com.mygdx.game.settings.GameContactListener;
 import com.mygdx.game.settings.GameSettings;
-import com.mygdx.game.settings.MyRenderer;
+import com.mygdx.game.utils.GameContactListener;
+import com.mygdx.game.utils.MyRenderer;
 import com.mygdx.game.world.GroundMap;
 
 public class GameScreen extends ScreenAdapter {

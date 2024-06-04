@@ -1,9 +1,10 @@
-package com.mygdx.game.settings;
+package com.mygdx.game.utils;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.character.Character;
 import com.mygdx.game.character.Player;
+import com.mygdx.game.settings.Assets;
 
 public class MyRenderer {
     private final SpriteBatch batch;

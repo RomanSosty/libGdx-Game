@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.inputProcesors.MainMenuInputProcessor;
 import com.mygdx.game.settings.Assets;
 import com.mygdx.game.settings.GameSettings;
+import com.mygdx.game.utils.inputProcesors.MainMenuInputProcessor;
 
 
 public class MainMenu extends ScreenAdapter {

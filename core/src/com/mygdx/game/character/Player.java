@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.inputProcesors.PlayerInputProcessor;
 import com.mygdx.game.settings.Assets;
+import com.mygdx.game.utils.inputProcesors.PlayerInputProcessor;
 
 public class Player extends Character {
     private final Texture texture;
