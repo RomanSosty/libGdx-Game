@@ -9,7 +9,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class Assets {
 
     public static Texture playButton, optionsButton, quitButton;
-    public static Texture playerUI, playerTexture, playerWalkSheet, playerAttack, playerHealth;
+    public static Texture playerUI, playerTexture, playerAttack, playerHealth;
+    public static Texture playerWalkRight, playerWalkUp, playerWalkLeft, playerWalkDown;
     public static Texture woodEnemyTexture, woodEnemyWalkSheet;
     public static Texture blueCandy;
     public static Music music;
@@ -43,8 +44,12 @@ public class Assets {
     private static void loadPlayer() {
         playerUI = loadTexture("UI.png");
         playerHealth = loadTexture("health.png");
-        playerTexture = loadTexture("characters/Pink_Monster/Pink_Monster.png");
-        playerWalkSheet = loadTexture("characters/Pink_Monster/Pink_Monster_Walk_6.png");
+        playerTexture = loadTexture("characters/Pink_Monster/Pink_Monster_Idle_4.png");
+        playerWalkRight = loadTexture("characters/Pink_Monster/Pink_Monster_Walk_6.png");
+        playerWalkLeft = loadTexture("characters/Pink_Monster/Pink_Monster_Walk_Left_6.png");
+        playerWalkUp = loadTexture("characters/Pink_Monster/Pink_Monster_Climb_4.png");
+        //TODO: Make animation for walk down
+        playerWalkDown = loadTexture("characters/Pink_Monster/Pink_Monster_Idle_4.png");
         playerAttack = loadTexture("characters/Pink_Monster/Pink_Monster_Attack2_6.png");
     }
 
@@ -66,7 +71,7 @@ public class Assets {
 
         playerUI.dispose();
         playerTexture.dispose();
-        playerWalkSheet.dispose();
+        playerWalkRight.dispose();
         playerAttack.dispose();
 
         woodEnemyTexture.dispose();
