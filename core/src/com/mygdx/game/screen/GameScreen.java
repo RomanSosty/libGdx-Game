@@ -75,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
             game.setScreen(new MainMenu(game));
         } else {
             groundMap.render();
-            //debugRenderer.render(world, camera.combined);
+            debugRenderer.render(world, camera.combined);
 
             batch.begin();
             for (WoodEnemy enemy : woodEnemies) {
