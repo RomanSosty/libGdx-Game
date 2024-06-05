@@ -5,13 +5,16 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.settings.Assets;
+import com.mygdx.game.settings.WalkDirection;
 import com.mygdx.game.utils.inputProcesors.PlayerInputProcessor;
 
 public class Player extends Character {
-    private final Animation<TextureRegion> walkAnimation, attackAnimation;
+    private final Animation<TextureRegion> walkRight, walkUp, walkLeft, walkDown;
+    private final Animation<TextureRegion> attackAnimation, idleAnimation;
     private boolean isWalking = false;
     private boolean isAttacking = false;
     private float health = 1f;
+    private WalkDirection walkDirection = WalkDirection.RIGHT;
 
     public Player(World world) {
         super(world, 50f, Assets.playerTexture);
@@ -19,8 +22,12 @@ public class Player extends Character {
         makeBody(150, 250, this, world);
         makeSprite();
 
-        walkAnimation = makeAnimation(Assets.playerWalkSheet, 6);
+        walkRight = makeAnimation(Assets.playerWalkRight, 6);
+        walkLeft = makeAnimation(Assets.playerWalkLeft, 6);
+        walkUp = makeAnimation(Assets.playerWalkUp, 4);
+        walkDown = makeAnimation(Assets.playerWalkDown, 4);
         attackAnimation = makeAnimation(Assets.playerAttack, 6);
+        idleAnimation = makeAnimation(Assets.playerTexture, 4);
 
         PlayerInputProcessor inputProcessor = new PlayerInputProcessor(this);
         Gdx.input.setInputProcessor(inputProcessor);
@@ -31,8 +38,30 @@ public class Player extends Character {
         setAnimation(delta);
     }
 
+    private void setAnimation(float delta) {
+        setStateTime(delta);
+
+        if (isWalking && walkDirection == WalkDirection.RIGHT) {
+            getSprite().setRegion(walkRight.getKeyFrame(getStateTime(), true));
+        } else if (isWalking && walkDirection == WalkDirection.UP) {
+            getSprite().setRegion(walkUp.getKeyFrame(getStateTime(), true));
+        } else if (isWalking && walkDirection == WalkDirection.LEFT) {
+            getSprite().setRegion(walkLeft.getKeyFrame(getStateTime(), true));
+        } else if (isWalking && walkDirection == WalkDirection.DOWN) {
+            getSprite().setRegion(walkDown.getKeyFrame(getStateTime(), true));
+        } else if (isAttacking) {
+            getSprite().setRegion(attackAnimation.getKeyFrame(getStateTime(), true));
+        } else {
+            getSprite().setRegion(idleAnimation.getKeyFrame(getStateTime(), true));
+        }
+    }
+
     public void setIsWalking(boolean isWalking) {
         this.isWalking = isWalking;
+    }
+
+    public void setWalkDirection(WalkDirection walkDirection) {
+        this.walkDirection = walkDirection;
     }
 
     public void setIsAttacking(boolean isAttacking) {
@@ -61,18 +90,6 @@ public class Player extends Character {
     public void playerDeath() {
         if (health <= 0.1) {
             setIsDestroyed();
-        }
-    }
-
-    private void setAnimation(float delta) {
-        setStateTime(delta);
-
-        if (isWalking) {
-            getSprite().setRegion(walkAnimation.getKeyFrame(getStateTime(), true));
-        } else if (isAttacking) {
-            getSprite().setRegion(attackAnimation.getKeyFrame(getStateTime(), true));
-        } else {
-            defaultAnimation();
         }
     }
 }

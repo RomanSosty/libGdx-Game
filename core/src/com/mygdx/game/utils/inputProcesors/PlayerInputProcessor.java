@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.settings.WalkDirection;
 import com.mygdx.game.world.character.Player;
 
 public class PlayerInputProcessor extends InputAdapter {
@@ -22,14 +23,17 @@ public class PlayerInputProcessor extends InputAdapter {
             case Input.Keys.A:
                 body.setLinearVelocity(-player.getSpeed(), body.getLinearVelocity().y);
                 player.setIsWalking(true);
+                player.setWalkDirection(WalkDirection.LEFT);
                 break;
             case Input.Keys.D:
                 body.setLinearVelocity(player.getSpeed(), body.getLinearVelocity().y);
                 player.setIsWalking(true);
+                player.setWalkDirection(WalkDirection.RIGHT);
                 break;
             case Input.Keys.W:
                 body.setLinearVelocity(body.getLinearVelocity().x, player.getSpeed());
                 player.setIsWalking(true);
+                player.setWalkDirection(WalkDirection.UP);
                 break;
             case Input.Keys.S:
                 body.setLinearVelocity(body.getLinearVelocity().x, -player.getSpeed());
