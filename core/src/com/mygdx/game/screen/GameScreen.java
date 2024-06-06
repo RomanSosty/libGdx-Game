@@ -61,7 +61,9 @@ public class GameScreen extends ScreenAdapter {
         woodEnemies.add(woodEnemy2);
 
         BlueCandy blueCandy = new BlueCandy(world, 440, 250);
+        //BlueCandy blueCandy2 = new BlueCandy(world, 740, 250);
         blueCandies.add(blueCandy);
+        //blueCandies.add(blueCandy2);
     }
 
     @Override

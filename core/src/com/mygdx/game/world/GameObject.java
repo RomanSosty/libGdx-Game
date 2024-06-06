@@ -25,7 +25,7 @@ public abstract class GameObject {
 
         body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(texture.getWidth() / 10, texture.getHeight() / 2);
+        shape.setAsBox((float) texture.getWidth() / 10, (float) texture.getHeight() / 2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
@@ -43,10 +43,6 @@ public abstract class GameObject {
     public void makeSprite() {
         sprite = new Sprite(texture, 32, 32);
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
-    }
-
-    public void defaultAnimation() {
-        sprite.setRegion(texture);
     }
 
     public Sprite getSprite() {
@@ -68,7 +64,8 @@ public abstract class GameObject {
     public boolean isDestroyed() {
         return isDestroyed;
     }
-
+    
+    //TODO: přesun interface ?
     public void update(float delta) {
     }
 

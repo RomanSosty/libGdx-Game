@@ -10,7 +10,5 @@ public class BlueCandy extends GameObject {
         super(world, Assets.blueCandy);
         makeBody(x, y, this, world);
         makeSprite();
-
     }
-
 }

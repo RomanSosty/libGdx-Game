@@ -37,7 +37,7 @@ public class GroundMap {
                     Body body = world.createBody(bodyDef);
 
                     PolygonShape shape = new PolygonShape();
-                    shape.setAsBox(tileLayer.getTileWidth() / 2, tileLayer.getTileHeight() / 2);
+                    shape.setAsBox((float) tileLayer.getTileWidth() / 2, (float) tileLayer.getTileHeight() / 2);
                     body.createFixture(shape, 1.0f);
                     body.setUserData(this);
                     shape.dispose();

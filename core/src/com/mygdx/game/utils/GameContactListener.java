@@ -29,6 +29,11 @@ public class GameContactListener implements ContactListener {
             lastCollisionTime = currentTime;
         }
     }
+    
+    private void setCollisionObject(Contact contact) {
+        objectA = contact.getFixtureA().getBody().getUserData();
+        objectB = contact.getFixtureB().getBody().getUserData();
+    }
 
     private void enemyHitWall() {
         if (isEnemyAndWall(objectA, objectB)) {
@@ -62,11 +67,6 @@ public class GameContactListener implements ContactListener {
             ((Player) objectB).setUpHealth();
             ((BlueCandy) objectA).setIsDestroyed();
         }
-    }
-
-    private void setCollisionObject(Contact contact) {
-        objectA = contact.getFixtureA().getBody().getUserData();
-        objectB = contact.getFixtureB().getBody().getUserData();
     }
 
     private boolean isEnemyAndPlayer(Object obj1, Object obj2) {
