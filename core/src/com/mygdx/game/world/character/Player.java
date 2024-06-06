@@ -9,8 +9,8 @@ import com.mygdx.game.settings.WalkDirection;
 import com.mygdx.game.utils.inputProcesors.PlayerInputProcessor;
 
 public class Player extends Character {
-    private final Animation<TextureRegion> walkRight, walkUp, walkLeft, walkDown;
-    private final Animation<TextureRegion> attackAnimation, idleAnimation;
+    private Animation<TextureRegion> walkRight, walkUp, walkLeft, walkDown;
+    private Animation<TextureRegion> attackAnimation, idleAnimation;
     private boolean isWalking = false;
     private boolean isAttacking = false;
     private float health = 1f;
@@ -21,16 +21,19 @@ public class Player extends Character {
 
         makeBody(150, 250, this, world);
         makeSprite();
+        initAnimation();
+        
+        PlayerInputProcessor inputProcessor = new PlayerInputProcessor(this);
+        Gdx.input.setInputProcessor(inputProcessor);
+    }
 
+    private void initAnimation() {
         walkRight = makeAnimation(Assets.playerWalkRight, 6);
         walkLeft = makeAnimation(Assets.playerWalkLeft, 6);
         walkUp = makeAnimation(Assets.playerWalkUp, 4);
         walkDown = makeAnimation(Assets.playerWalkDown, 4);
         attackAnimation = makeAnimation(Assets.playerAttack, 6);
         idleAnimation = makeAnimation(Assets.playerTexture, 4);
-
-        PlayerInputProcessor inputProcessor = new PlayerInputProcessor(this);
-        Gdx.input.setInputProcessor(inputProcessor);
     }
 
     @Override

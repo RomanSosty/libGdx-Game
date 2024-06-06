@@ -39,5 +39,4 @@ public class MyRenderer {
 
         batch.draw(Assets.playerUI, playerUiXposition, playerUiYposition);
     }
-
 }
