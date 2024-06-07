@@ -3,6 +3,7 @@ package com.mygdx.game.screen;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -31,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
     private World world;
     private Player player;
     private GroundMap groundMap;
+    private BitmapFont bitmapFont;
 
     public GameScreen(MyGdxGame game, OrthographicCamera camera) {
         this.batch = game.getBatch();
@@ -50,6 +52,7 @@ public class GameScreen extends ScreenAdapter {
     public void show() {
         createCharacters();
         groundMap = new GroundMap(world, camera);
+        bitmapFont = new BitmapFont();
     }
 
     private void createCharacters() {
@@ -80,6 +83,8 @@ public class GameScreen extends ScreenAdapter {
             debugRenderer.render(world, camera.combined);
 
             batch.begin();
+            bitmapFont.draw(batch, "Score: " + player.getScore(), camera.position.x + camera.viewportWidth / 3, camera.position.y + camera.viewportHeight / 2 - 20);
+
             for (WoodEnemy enemy : woodEnemies) {
                 myRenderer.objectRenderer(enemy, delta);
             }
