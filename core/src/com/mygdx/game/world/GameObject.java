@@ -64,13 +64,12 @@ public abstract class GameObject {
     public boolean isDestroyed() {
         return isDestroyed;
     }
-    
+
     //TODO: přesun interface ?
     public void update(float delta) {
     }
 
     public void dispose() {
-        texture.dispose();
         world.destroyBody(body);
         body = null;
     }
