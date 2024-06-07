@@ -8,8 +8,11 @@ import com.mygdx.game.world.GroundMap;
 import com.mygdx.game.world.candies.BlueCandy;
 import com.mygdx.game.world.character.Player;
 import com.mygdx.game.world.character.WoodEnemy;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GameContactListener implements ContactListener {
+    private final Logger logger = LogManager.getLogger(GameContactListener.class);
     private long lastCollisionTime = 0;
     private Object objectA, objectB;
 
@@ -29,7 +32,7 @@ public class GameContactListener implements ContactListener {
             lastCollisionTime = currentTime;
         }
     }
-    
+
     private void setCollisionObject(Contact contact) {
         objectA = contact.getFixtureA().getBody().getUserData();
         objectB = contact.getFixtureB().getBody().getUserData();
@@ -63,9 +66,11 @@ public class GameContactListener implements ContactListener {
         if (isPlayerAndCandy(objectA, objectB)) {
             ((Player) objectA).setUpHealth();
             ((BlueCandy) objectB).setIsDestroyed();
+            logger.info("Player took candy");
         } else if (isPlayerAndCandy(objectB, objectA)) {
             ((Player) objectB).setUpHealth();
             ((BlueCandy) objectA).setIsDestroyed();
+            logger.info("Player took candy");
         }
     }
 
