@@ -57,8 +57,10 @@ public class GameContactListener implements ContactListener {
     private void playerHitEnemy() {
         if (isEnemyAndPlayer(objectA, objectB) && ((Player) objectB).isAttacking()) {
             ((WoodEnemy) objectA).setIsDestroyed();
+            ((Player) objectB).addScore();
         } else if (isEnemyAndPlayer(objectB, objectA) && ((Player) objectA).isAttacking()) {
             ((WoodEnemy) objectB).setIsDestroyed();
+            ((Player) objectA).addScore();
         }
     }
 

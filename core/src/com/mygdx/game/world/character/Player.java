@@ -15,6 +15,7 @@ public class Player extends Character {
     private boolean isAttacking = false;
     private float health = 1f;
     private WalkDirection walkDirection = WalkDirection.RIGHT;
+    private int score = 0;
 
     public Player(World world) {
         super(world, 50f, Assets.playerTexture);
@@ -22,7 +23,7 @@ public class Player extends Character {
         makeBody(150, 250, this, world);
         makeSprite();
         initAnimation();
-        
+
         PlayerInputProcessor inputProcessor = new PlayerInputProcessor(this);
         Gdx.input.setInputProcessor(inputProcessor);
     }
@@ -94,5 +95,13 @@ public class Player extends Character {
         if (health <= 0.1) {
             setIsDestroyed();
         }
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void addScore() {
+        score++;
     }
 }
