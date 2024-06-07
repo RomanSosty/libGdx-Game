@@ -18,26 +18,18 @@ public class PlayerInputProcessor extends InputAdapter {
 
     @Override
     public boolean keyDown(int keycode) {
-        //TODO: divide walk, attack and othet move to different methods
         switch (keycode) {
             case Input.Keys.A:
-                body.setLinearVelocity(-player.getSpeed(), body.getLinearVelocity().y);
-                player.setIsWalking(true);
-                player.setWalkDirection(WalkDirection.LEFT);
+                playerMove(WalkDirection.LEFT, -player.getSpeed(), body.getLinearVelocity().y);
                 break;
             case Input.Keys.D:
-                body.setLinearVelocity(player.getSpeed(), body.getLinearVelocity().y);
-                player.setIsWalking(true);
-                player.setWalkDirection(WalkDirection.RIGHT);
+                playerMove(WalkDirection.RIGHT, player.getSpeed(), body.getLinearVelocity().y);
                 break;
             case Input.Keys.W:
-                body.setLinearVelocity(body.getLinearVelocity().x, player.getSpeed());
-                player.setIsWalking(true);
-                player.setWalkDirection(WalkDirection.UP);
+                playerMove(WalkDirection.UP, body.getLinearVelocity().x, player.getSpeed());
                 break;
             case Input.Keys.S:
-                body.setLinearVelocity(body.getLinearVelocity().x, -player.getSpeed());
-                player.setIsWalking(true);
+                playerMove(WalkDirection.DOWN, body.getLinearVelocity().x, -player.getSpeed());
                 break;
             case Input.Keys.SPACE:
                 player.setIsAttacking(true);
@@ -49,23 +41,32 @@ public class PlayerInputProcessor extends InputAdapter {
         return true;
     }
 
+    private void playerMove(WalkDirection direction, float xSpeed, float ySpeed) {
+        body.setLinearVelocity(xSpeed, ySpeed);
+        player.setIsWalking(true);
+        player.setWalkDirection(direction);
+    }
+
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
             case Input.Keys.A:
             case Input.Keys.D:
-                body.setLinearVelocity(0, body.getLinearVelocity().y);
-                player.setIsWalking(false);
+                playerStopMove(0, body.getLinearVelocity().y);
                 break;
             case Input.Keys.W:
             case Input.Keys.S:
-                body.setLinearVelocity(body.getLinearVelocity().x, 0);
-                player.setIsWalking(false);
+                playerStopMove(body.getLinearVelocity().x, 0);
                 break;
             case Input.Keys.SPACE:
                 player.setIsAttacking(false);
                 break;
         }
         return true;
+    }
+
+    private void playerStopMove(float xSpeed, float ySpeed) {
+        body.setLinearVelocity(xSpeed, ySpeed);
+        player.setIsWalking(false);
     }
 }
